@@ -91,6 +91,7 @@ while running:
     message_score(font_score, "score:", str(score), GREEN, 700, 50)
     if foodx == snake_pos_x and foody == snake_pos_y:
         food()
+        snake_speed += 1
         score += 10
     pygame.draw.rect(screen, BLUE, [foodx, foody, 20, 20])
     pygame.draw.rect(screen, GRAY, [0,0, DISPLAY_SIZE[0], DISPLAY_SIZE[1]],10)
