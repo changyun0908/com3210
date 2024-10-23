@@ -28,16 +28,30 @@ def food():
             continue
         else:
             break
+
+def TNT():
+    global tntx, tnty
+    while True:
+        tntx = random.randrange(10,DISPLAY_SIZE[0] - SNAKE_SIZE, SNAKE_SIZE)
+        tnty = random.randrange(10,DISPLAY_SIZE[1] - SNAKE_SIZE, SNAKE_SIZE)
+        tnt_pos = [tntx,tnty]
+
+        if tnt_pos in [snake_pos_x, snake_pos_y]:
+            continue
+        else:
+            break
+
         
 DISPLAY_SIZE = (800,600)
 
 #snake
 SNAKE_SIZE = 20
-snake_speed = 5
+snake_speed = 30
 snake_pos_x = DISPLAY_SIZE[0] / 2 - SNAKE_SIZE / 2
 snake_pos_y = DISPLAY_SIZE[1] / 2 - SNAKE_SIZE / 2
 snake_pos_x_change = 0
 snake_pos_y_change = 0
+tail = []
 
 #food
 foodx = None
@@ -65,6 +79,7 @@ pygame.display.set_caption("SNAKE GAME")
 
 running = True
 food()
+TNT()
 
 while running:
     for event in pygame.event.get():
@@ -88,12 +103,16 @@ while running:
     snake_pos_x += snake_pos_x_change
     snake_pos_y += snake_pos_y_change
     screen.fill(WHITE)
-    message_score(font_score, "score:", str(score), GREEN, 700, 50)
+    message_score(font_score, "score: ", str(score), GREEN, 700, 50)
     if foodx == snake_pos_x and foody == snake_pos_y:
         food()
         snake_speed += 1
         score += 10
+    if tntx == snake_pos_x and tnty == snake_pos_y:
+        running = False       
+
     pygame.draw.rect(screen, BLUE, [foodx, foody, 20, 20])
+    pygame.draw.rect(screen, GRAY, [tntx, tnty, 20, 20])
     pygame.draw.rect(screen, GRAY, [0,0, DISPLAY_SIZE[0], DISPLAY_SIZE[1]],10)
     pygame.draw.rect(screen, RED, [snake_pos_x, snake_pos_y,\
                                    SNAKE_SIZE,SNAKE_SIZE])
